@@ -16,39 +16,6 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-// PingFang SC – Chinese system font (macOS / iOS default)
-const pingFang = localFont({
-  variable: "--font-pingfang",
-  style: "normal",
-  display: "swap",
-  src: [
-    {
-      path: "../public/fonts/PingFang-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/PingFangSC-Fonts/PingFang Medium.ttf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/PingFangSC-Fonts/PingFang Bold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  // Optional: fallback if custom files aren't used
-  fallback: [
-    "PingFang SC",
-    "Hiragino Sans GB",
-    "Microsoft YaHei",
-    "Apple SD Gothic Neo",
-    "system-ui",
-    "sans-serif",
-  ],
-});
-
 export const metadata: Metadata = {
   title: "Your App",
   description: "Beautiful Next.js app with Geist + PingFang",
