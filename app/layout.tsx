@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google"; // renamed for clarity
+import { Geist, Geist_Mono } from "next/font/google"; // 
 import localFont from "next/font/local";
 import "./globals.css";
 
-// Geist fonts (Latin / English)
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
