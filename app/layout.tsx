@@ -23,17 +23,17 @@ const pingFang = localFont({
   display: "swap",
   src: [
     {
-      path: "../../public/fonts/PingFang-Regular.ttf",
+      path: "../public/fonts/PingFang-Regular.ttf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/PingFang-Medium.ttf",
+      path: "../public/fonts/PingFangSC-Fonts/PingFang Medium.ttf",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../../public/fonts/PingFang-Bold.ttf",
+      path: "../public/fonts/PingFangSC-Fonts/PingFang Bold.ttf",
       weight: "700",
       style: "normal",
     },
