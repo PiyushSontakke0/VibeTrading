@@ -144,3 +144,20 @@
     @apply bg-background text-foreground font-sans;
   }
 }
+
+/* Disable default cross-fade for the View Transition */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Ensure the new view sits on top during the animation */
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
+/* Optional: Make the dark mode switch smoother for non-supporting browsers */
+html {
+  transition: background-color 0.5s ease;
+}
