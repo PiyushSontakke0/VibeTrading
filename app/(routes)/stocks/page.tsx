@@ -60,8 +60,8 @@ function makeSeries(seedStr: string, len = 30) {
     return out;
 }
 
-// Helper component: Inline sparkline SVG
-function Sparkline({ data, width = 120, height = 36 }: { data: number[]; width?: number; height?: number }) {
+// Helper component: Animated sparkline SVG
+function Sparkline({ data, width = 120, height = 24 }: { data: number[]; width?: number; height?: number }) {
     if (!data || data.length === 0) return null;
     const min = Math.min(...data);
     const max = Math.max(...data);
@@ -76,11 +76,68 @@ function Sparkline({ data, width = 120, height = 36 }: { data: number[]; width?:
     const first = data[0];
     const positive = last >= first;
     const stroke = positive ? 'rgb(34 197 94)' : 'rgb(239 68 68)';
+
+    // Calculate path length for stroke animation
+    const pathLength = data.length * step;
+
     return (
-        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" className="block w-full">
-            <polyline fill="none" stroke={stroke} strokeWidth={2} points={points} strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <motion.svg
+            width={width}
+            height={height}
+            viewBox={`0 0 ${width} ${height}`}
+            preserveAspectRatio="none"
+            className="block w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+        >
+            <motion.polyline
+                fill="none"
+                stroke={stroke}
+                strokeWidth={2}
+                points={points}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ strokeDashoffset: pathLength, strokeDasharray: pathLength }}
+                animate={{ strokeDashoffset: 0, strokeDasharray: pathLength }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+                whileHover={{ strokeWidth: 2.5 }}
+            />
+        </motion.svg>
     );
+}
+
+// LocalStorage cache utilities
+const CACHE_KEY = 'vibe_stock_prices_cache';
+const CACHE_EXPIRY_KEY = 'vibe_stock_prices_expiry';
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+function getCachedPrices(): Record<string, { price: number; change: number; percent: number; series: number[] }> | null {
+    if (typeof window === 'undefined') return null;
+    try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        const expiry = localStorage.getItem(CACHE_EXPIRY_KEY);
+        if (!cached || !expiry) return null;
+        if (Date.now() > parseInt(expiry)) {
+            localStorage.removeItem(CACHE_KEY);
+            localStorage.removeItem(CACHE_EXPIRY_KEY);
+            return null;
+        }
+        return JSON.parse(cached);
+    } catch (err) {
+        console.error('Error reading cache:', err);
+        return null;
+    }
+}
+
+function setCachedPrices(prices: Record<string, { price: number; change: number; percent: number; series: number[] }>) {
+    if (typeof window === 'undefined') return;
+    try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(prices));
+        localStorage.setItem(CACHE_EXPIRY_KEY, (Date.now() + CACHE_DURATION).toString());
+    } catch (err) {
+        console.error('Error writing cache:', err);
+    }
 }
 
 export default function StocksPage() {
@@ -88,11 +145,19 @@ export default function StocksPage() {
     const router = useRouter();
     const [pricesMap, setPricesMap] = useState<Record<string, { price: number; change: number; percent: number; series: number[] }>>({});
 
-    // Fetch live data from Finnhub on component mount
+    // Fetch live data from Finnhub on component mount with caching
     useEffect(() => {
         const apiKey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
-        if (!apiKey) return;
         let cancelled = false;
+
+        // Check cache first
+        const cached = getCachedPrices();
+        if (cached) {
+            setPricesMap(cached);
+            return; // Use cached data, skip API calls
+        }
+
+        if (!apiKey) return;
 
         const fetchForSymbol = async (sym: string) => {
             try {
@@ -120,7 +185,12 @@ export default function StocksPage() {
                 const percent = prevClose ? Number(((change / prevClose) * 100).toFixed(2)) : 0;
 
                 if (!cancelled) {
-                    setPricesMap(prev => ({ ...prev, [sym]: { price, change, percent, series } }));
+                    setPricesMap(prev => {
+                        const updated = { ...prev, [sym]: { price, change, percent, series } };
+                        // Cache after each update
+                        setCachedPrices(updated);
+                        return updated;
+                    });
                 }
             } catch (err) {
                 console.error(`Error fetching ${sym}:`, err);
@@ -173,7 +243,7 @@ export default function StocksPage() {
                 </div>
 
                 <div className="max-w-6xl mx-auto">
-                    <h2 className="text-2xl font-semibold mb-6">Popular Stocks</h2>
+                    <h2 className="text-2xl font-semibold mb-6">Popular Stocks at a Glance.</h2>
 
                     <motion.div
                         initial="hidden"
@@ -207,12 +277,12 @@ export default function StocksPage() {
                                     <button
                                         key={symbol}
                                         onClick={() => handleSymbolClick(symbol)}
-                                        className="group p-3 md:p-4 rounded-xl border border-border bg-card hover:shadow transition-transform transform hover:-translate-y-0.5 text-left"
-                                        style={{ aspectRatio: '4 / 3' }}
+                                        className="group p-2 sm:p-3 md:p-3 lg:p-4 rounded-xl border border-border bg-card hover:shadow transition-transform transform hover:-translate-y-0.5 text-left"
+                                        style={{ aspectRatio: '16 / 9' }}
                                     >
                                         <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4 h-full">
                                             <div className="flex-none">
-                                                <div className="w-16 h-16 rounded-md flex items-center justify-center text-muted-foreground border border-border bg-card/80 font-semibold text-xl">
+                                                <div className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-md flex items-center justify-center text-muted-foreground border border-border bg-card/80 font-semibold text-sm md:text-lg">
                                                     {symbol.slice(0, 1)}
                                                 </div>
                                             </div>
@@ -225,7 +295,7 @@ export default function StocksPage() {
                                                     <div className="text-sm text-muted-foreground truncate mt-1">{companyName}</div>
                                                 </div>
 
-                                                <div className="mt-2 flex items-center justify-between gap-3">
+                                                <div className="mt-1 md:mt-2 flex items-center justify-between gap-3">
                                                     <div className="text-sm text-muted-foreground">{marketCapLabel}</div>
                                                     {live && (
                                                         <div className="flex items-baseline gap-2">
@@ -237,7 +307,7 @@ export default function StocksPage() {
                                                     )}
                                                 </div>
 
-                                                <div className="mt-3">
+                                                <div className="mt-2 md:mt-3">
                                                     <Sparkline data={series} />
                                                 </div>
                                             </div>
