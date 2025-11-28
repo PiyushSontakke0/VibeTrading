@@ -12,7 +12,7 @@ const Header = ({
             <div className="container mx-auto flex items-center justify-between py-3 px-4">
 
                 {/* Left: Logo */}
-                <Link href="/">
+                <Link href="/dashboard">
                     <Image
                         src="/vercel.svg"
                         alt="Logo"

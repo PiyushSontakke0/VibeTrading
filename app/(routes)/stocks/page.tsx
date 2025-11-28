@@ -227,7 +227,7 @@ export default function StocksPage() {
             <section className="w-full p-4 md:p-6 lg:p-8">
                 <div className="mb-12">
                     <div className="max-w-2xl mx-auto">
-                        <h1 className="text-4xl font-bold mb-8 text-center">Search Stocks</h1>
+                        <h1 className="text-4xl font-bold mb-8 text-center mt-8">Search Stocks</h1>
 
                         <form onSubmit={handleSearch} className="flex gap-2 mb-8">
                             <Input
