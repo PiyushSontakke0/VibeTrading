@@ -1,7 +1,5 @@
 'use client'
 import { LoginForm } from "@/components/login-form";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 export default function LoginPage() {
 
@@ -10,10 +8,7 @@ export default function LoginPage() {
             <div className="w-full max-w-sm md:max-w-4xl">
                 <LoginForm />
             </div>
-            <ThemeToggle />
 
-<<<<<<< HEAD
-=======
             {/* Step 2: Add a button to trigger the toggle */}
             {/* <button
                 onClick={toggleDarkMode}
@@ -22,7 +17,6 @@ export default function LoginPage() {
                 Toggle Dark Mode
             </button> */}
             <ThemeToggle />
->>>>>>> 05f22f01c94655ab1b197e6b0349b1d0b9ec5990
         </div>
     );
 }
