@@ -1,6 +1,6 @@
 import React from 'react'
 
-const watchlist = () => {
+function watchlist() {
     return (
         <div>
 
