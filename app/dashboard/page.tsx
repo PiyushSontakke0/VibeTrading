@@ -3,6 +3,10 @@ import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 import { DataTable } from "@/components/data-table"
 import { SectionCards } from "@/components/section-cards"
 import { SiteHeader } from "@/components/site-header"
+// app/dashboard/page.tsx
+import '../globals.css';
+
+
 import {
   SidebarInset,
   SidebarProvider,
