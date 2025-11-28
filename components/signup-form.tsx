@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 
+
 export function SignUpForm({
     className,
     ...props
@@ -68,67 +69,74 @@ export function SignUpForm({
                 <CardContent className="grid p-0 md:grid-cols-2">
                     <form className="p-6 md:p-8" onSubmit={handleSubmit}>
                         <FieldGroup>
-                            <div className="flex flex-col items-center gap-2 text-center">
+                            <div className="flex flex-col items-center gap-2 text-center mb-2">
                                 <h1 className="text-2xl font-bold">Get Started!</h1>
                                 <p className="text-muted-foreground text-balance">
                                     Join the community of Vibe Traders!
                                 </p>
                             </div>
 
-                            <Field>
-                                <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                                <Input id="name" name="name" type="text" placeholder="John Doe" required />
-                            </Field>
+                            {/* --- CHANGED: Added a grid wrapper for inputs --- */}
+                            <div className="grid gap-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <Field>
+                                        <FieldLabel htmlFor="name">Full Name</FieldLabel>
+                                        <Input id="name" name="name" type="text" placeholder="John Doe" required />
+                                    </Field>
+                                    <Field>
+                                        <FieldLabel htmlFor="country">Country</FieldLabel>
+                                        <Input id="country" name="country" type="text" placeholder="Country" required />
+                                    </Field>
+                                </div>
 
-                            <Field>
-                                <FieldLabel htmlFor="email">Email</FieldLabel>
-                                <Input id="email" name="email" type="email" placeholder="johndoe@example.com" required />
-                            </Field>
+                                <Field>
+                                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                                    <Input id="email" name="email" type="email" placeholder="johndoe@example.com" required />
+                                </Field>
 
-                            <Field>
-                                <FieldLabel htmlFor="country">Country</FieldLabel>
-                                <Input id="country" name="country" type="text" placeholder="Country" required />
-                            </Field>
-
-                            <Field>
-                                <FieldLabel htmlFor="password">Password</FieldLabel>
-                                <Input id="password" name="password" type="password" required />
-                            </Field>
-
-                            <Field>
-                                <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
-                                <Input id="confirmPassword" name="confirmPassword" type="password" required />
-                            </Field>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <Field>
+                                        <FieldLabel htmlFor="password">Password</FieldLabel>
+                                        <Input id="password" name="password" type="password" required />
+                                    </Field>
+                                    <Field>
+                                        <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+                                        <Input id="confirmPassword" name="confirmPassword" type="password" required />
+                                    </Field>
+                                </div>
+                            </div>
+                            {/* --- END CHANGE --- */}
 
                             {error && (
-                                <p className="text-red-500 text-sm text-center">{error}</p>
+                                <p className="text-red-500 text-sm text-center mt-2">{error}</p>
                             )}
 
-                            <Field>
-                                <Button type="submit" disabled={loading}>
-                                    {loading ? "Signing up..." : "Sign Up"}
+                            <Field className="mt-4">
+                                <Button type="submit" disabled={loading} className="w-full">
+                                    {loading ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                            Signing up...
+                                        </>
+                                    ) : (
+                                        "Sign Up"
+                                    )}
                                 </Button>
                             </Field>
 
-                            <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+                            <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card my-4">
                                 Or continue with
                             </FieldSeparator>
 
-                            {/* Social buttons */}
+                            {/* Social buttons (Content omitted for brevity, kept structure) */}
                             <Field className="grid grid-cols-3 gap-4">
-                                <Button variant="outline" type="button">
-                                    <span className="sr-only">Sign up with Apple</span>
-                                </Button>
-                                <Button variant="outline" type="button">
-                                    <span className="sr-only">Sign up with Google</span>
-                                </Button>
-                                <Button variant="outline" type="button">
-                                    <span className="sr-only">Sign up with Meta</span>
-                                </Button>
+                                <Button variant="outline" type="button">Apple</Button>
+                                <Button variant="outline" type="button">Google</Button>
+                                <Button variant="outline" type="button">Meta</Button>
                             </Field>
 
-                            <FieldDescription className="text-center">
-                                Already have an account? <a href="/sign-in">Sign In</a>
+                            <FieldDescription className="text-center mt-4">
+                                Already have an account? <a href="/sign-in" className="text-primary hover:underline">Sign In</a>
                             </FieldDescription>
                         </FieldGroup>
                     </form>
@@ -143,9 +151,9 @@ export function SignUpForm({
                 </CardContent>
             </Card>
 
-            <FieldDescription className="px-6 text-center">
-                By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-                and <a href="#">Privacy Policy</a>.
+            <FieldDescription className="px-6 text-center text-xs">
+                By clicking continue, you agree to our <a href="#" className="underline">Terms of Service</a>{" "}
+                and <a href="#" className="underline">Privacy Policy</a>.
             </FieldDescription>
         </div>
     )
