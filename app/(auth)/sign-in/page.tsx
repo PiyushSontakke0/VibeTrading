@@ -16,7 +16,12 @@ export default function LoginPage() {
             >
                 Toggle Dark Mode
             </button> */}
-            <ThemeToggle />
+            <div className="mt-10">
+                <ThemeToggle />
+            </div>
+
+
+
         </div>
     );
 }
