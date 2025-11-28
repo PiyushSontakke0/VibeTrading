@@ -3,11 +3,10 @@
 import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion" // 1. Animation Library
+// import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { authClient } from "@/lib/better-auth/client"
 import { ShakeWrapper } from "./ui/shake-wrapper"
-// UI Components
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {

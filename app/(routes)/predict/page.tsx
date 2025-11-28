@@ -67,13 +67,13 @@ export default function PredictPage() {
         <div className="min-h-screen bg-background text-foreground">
             <section className="w-full p-4 md:p-6 lg:p-8">
                 {/* Header */}
-                <div className="mb-8">
+                <div className="mb-8 mx-auto text-center w-fit">
                     <h1 className="text-4xl font-bold mb-2">Stock Price Predictions</h1>
                     <p className="text-muted-foreground">AI-powered market predictions based on historical data and trends</p>
                 </div>
 
                 {/* Search Section */}
-                <div className="mb-8 max-w-2xl">
+                <div className="mb-8 mx-auto max-w-2xl">
                     <form onSubmit={handleSearch} className="flex gap-2">
                         <Input
                             type="text"
