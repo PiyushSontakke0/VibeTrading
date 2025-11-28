@@ -26,7 +26,6 @@ export default function Page() {
         } as React.CSSProperties
       }
     >
-      <ThemeToggle />
       <AppSidebar variant="inset" />
       <SidebarInset>
         <SiteHeader />
