@@ -15,6 +15,7 @@ import { useState } from "react"
 import { Loader2, } from "lucide-react"
 import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
 import { useRouter } from "next/navigation"
+import { LoaderD } from "./ui/loader"
 export function SignUpForm({
     className,
     ...props
@@ -65,8 +66,8 @@ export function SignUpForm({
         }
     }
 
-    return (
-        <div className={cn("flex flex-col gap-6", className)} {...props}>
+    return (<>
+        {loading ? (<LoaderD />) : (<div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card className="overflow-hidden p-0">
                 <CardContent className="grid p-0 md:grid-cols-2">
                     <form className="p-6 md:p-8" onSubmit={handleSubmit}>
@@ -147,7 +148,7 @@ export function SignUpForm({
                         <img
                             src="/bull.jpg"
                             alt="Image"
-                            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8] dark:grayscale"
                         />
                     </div>
                 </CardContent>
@@ -157,6 +158,7 @@ export function SignUpForm({
                 By clicking continue, you agree to our <a href="#" className="underline">Terms of Service</a>{" "}
                 and <a href="#" className="underline">Privacy Policy</a>.
             </FieldDescription>
-        </div>
+        </div>)
+        }</>
     )
 }

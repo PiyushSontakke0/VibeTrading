@@ -52,7 +52,8 @@ export function LoginForm({
         }
     }
 
-    return (
+    return (<>
+
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card className="overflow-hidden p-0">
                 <CardContent className="grid p-0 md:grid-cols-2">
@@ -108,17 +109,16 @@ export function LoginForm({
                                 Or continue with
                             </FieldSeparator>
 
-                            {/* Social buttons */}
                             <Field className="grid grid-cols-3 gap-4">
                                 <Button variant="outline" type="button">
-                                    <span className="sr-only"><FaApple /></span>
+                                    <span className=""><FaApple /></span>
 
                                 </Button>
                                 <Button variant="outline" type="button">
-                                    <span className="sr-only"><FaGoogle /></span>
+                                    <span className=""><FaGoogle /></span>
                                 </Button>
                                 <Button variant="outline" type="button">
-                                    <span className="sr-only"><FaMeta /></span>
+                                    <span className=""><FaMeta /></span>
                                 </Button>
                             </Field>
 
@@ -142,6 +142,6 @@ export function LoginForm({
                 By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
                 and <a href="#">Privacy Policy</a>.
             </FieldDescription>
-        </div>
+        </div></>
     )
 }
