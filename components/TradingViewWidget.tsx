@@ -53,15 +53,18 @@ const TradingViewWidget = ({
                 </h3>
             )}
 
-            <div
-                className={`tradingview-widget-container ${className}`}
-                ref={containerRef}
-                style={{ height: `${height}px`, width: '100%' }}
-            >
+            {/* Rounded wrapper to give widgets smooth, clipped corners */}
+            <div className="rounded-lg overflow-hidden border border-border bg-card">
                 <div
-                    className="tradingview-widget-container__widget"
-                    style={{ height, width: '100%' }}
-                />
+                    className={`tradingview-widget-container ${className}`}
+                    ref={containerRef}
+                    style={{ height: `${height}px`, width: '100%', borderRadius: 'inherit', overflow: 'hidden' }}
+                >
+                    <div
+                        className="tradingview-widget-container__widget"
+                        style={{ height, width: '100%', borderRadius: 'inherit', overflow: 'hidden' }}
+                    />
+                </div>
             </div>
         </div>
     );
