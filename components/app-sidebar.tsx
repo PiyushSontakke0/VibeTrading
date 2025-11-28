@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { useState } from "react"
+import { useRouter } from 'next/navigation'
 import {
   IconCamera,
   IconChartBar,
@@ -144,6 +146,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     avatar: authenticatedUser?.image || data.user.avatar,
   }
 
+  const [searchInput, setSearchInput] = useState('')
+  const router = useRouter()
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    const symbol = searchInput.trim().toUpperCase()
+    if (symbol) {
+      router.push(`/stocks/${symbol}`)
+      setSearchInput('')
+    }
+  }
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -162,7 +176,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+
         <NavMain items={data.navMain} />
+        <div className="px-4 py-3">
+          <form onSubmit={handleSearch}>
+            <input
+              className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm placeholder:text-muted-foreground"
+              placeholder="Search stocks (e.g., AAPL)"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+          </form>
+        </div>
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
