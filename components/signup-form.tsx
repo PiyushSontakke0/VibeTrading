@@ -12,14 +12,22 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
+<<<<<<< HEAD
 import { Loader2, } from "lucide-react"
 import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
+=======
+import { useRouter } from "next/navigation"
+import { Loader2 } from "lucide-react"
+
+
+>>>>>>> a8eb4438ff320d461af2c523e913e7a0da93df55
 export function SignUpForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const router = useRouter()
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -53,8 +61,8 @@ export function SignUpForm({
                 return
             }
 
-            alert("Sign up successful!")
-            console.log("New user:", data.user)
+            // Redirect to dashboard
+            router.push("/dashboard")
         } catch (err) {
             console.error(err)
             setError("Something went wrong")
@@ -145,7 +153,7 @@ export function SignUpForm({
                         <img
                             src="/bull.jpg"
                             alt="Image"
-                            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8] dark:grayscale"
+                            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
                         />
                     </div>
                 </CardContent>
