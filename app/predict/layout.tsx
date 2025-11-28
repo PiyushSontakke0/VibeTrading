@@ -1,38 +1,19 @@
 import Header from "@/components/Header";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google"; // 
-import localFont from "next/font/local";
+import { ThemeToggle } from "@/components/theme-toggle";
 
-
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-    display: "swap",
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-    display: "swap",
-});
-
-export const metadata: Metadata = {
-    title: "Vibe Trading",
-    description: "Make beautiful losses with Vibe Trading. Gamble Professionally.",
-};
-
-export default function RootLayout({
+export default function PredictLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-            <body className="font-sans antialiased">
-                <Header />
+        <div className="flex flex-col min-h-screen">
+            <Header>
+                <ThemeToggle />
+            </Header>
+            <main>
                 {children}
-            </body>
-        </html>
+            </main>
+        </div>
     );
 }

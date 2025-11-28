@@ -2,7 +2,11 @@ import Link from "next/link"
 import Image from "next/image"
 import { NavigationMenuDemo } from "./nav-header-menu"
 
-const Header = async () => {
+const Header = ({
+    children,
+}: {
+    children: React.ReactNode;
+}) => {
     return (
         <header className="sticky top-0 shadow-sm">
             <div className="container mx-auto flex items-center justify-between py-4">
@@ -19,7 +23,7 @@ const Header = async () => {
                 </Link>
 
                 {/* Right: Nav */}
-                <NavigationMenuDemo />
+                <NavigationMenuDemo>{children}</NavigationMenuDemo>
             </div>
         </header>
     )
