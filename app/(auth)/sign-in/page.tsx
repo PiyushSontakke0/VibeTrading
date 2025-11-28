@@ -10,12 +10,13 @@ export default function LoginPage() {
             </div>
 
             {/* Step 2: Add a button to trigger the toggle */}
-            <button
+            {/* <button
                 onClick={toggleDarkMode}
                 className="mt-6 bg-primary text-primary-foreground px-4 py-2 rounded-md"
             >
                 Toggle Dark Mode
-            </button>
+            </button> */}
+            <ThemeToggle />
         </div>
     );
 }
