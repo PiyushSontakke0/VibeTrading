@@ -44,7 +44,6 @@ export default function StocksPage() {
                     </div>
                 </div>
 
-                {/* Popular Stocks Section */}
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-2xl font-semibold mb-6">Popular Stocks</h2>
 

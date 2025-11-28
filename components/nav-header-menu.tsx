@@ -15,6 +15,7 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { ThemeToggle } from "./theme-toggle"
+import { NavUser } from "./nav-user"
 
 const components: { title: string; href: string; description: string }[] = [
     {

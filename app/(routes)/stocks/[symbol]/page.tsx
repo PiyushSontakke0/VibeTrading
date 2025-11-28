@@ -1,10 +1,8 @@
-// app/(routes)/stocks/[symbol]/page.tsx
-
 'use client';
 
 import { useParams } from 'next/navigation';
 import TradingViewWidget from "@/components/TradingViewWidget";
-// import WatchlistButton from "@/components/WatchlistButton";
+import { useTheme } from 'next-themes';
 import {
     SYMBOL_INFO_WIDGET_CONFIG,
     CANDLE_CHART_WIDGET_CONFIG,
@@ -23,14 +21,14 @@ function normalizeSymbol(value?: string | string[]) {
 const DEFAULT_SYMBOL = "AAPL";
 
 export default function StockDetails() {
-    const params = useParams();
 
+    const params = useParams();
     const resolvedSymbol = normalizeSymbol(params?.symbol as string);
     const symbol = resolvedSymbol || DEFAULT_SYMBOL;
     const usingFallback = !resolvedSymbol;
-
+    const { resolvedTheme } = useTheme();
     const scriptUrl = `https://s3.tradingview.com/external-embedding/embed-widget-`;
-
+    const currentTheme = resolvedTheme === 'dark' ? 'dark' : 'light';
     return (
         <div className="flex min-h-screen bg-background text-foreground">
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full p-4 md:p-6 lg:p-8">
@@ -47,6 +45,7 @@ export default function StockDetails() {
                         symbol={symbol}
                         scriptUrl={`${scriptUrl}symbol-info.js`}
                         config={SYMBOL_INFO_WIDGET_CONFIG(symbol)}
+                        className='custom-widget'
                         height={170}
                     />
 
@@ -55,7 +54,7 @@ export default function StockDetails() {
                         symbol={symbol}
                         scriptUrl={`${scriptUrl}advanced-chart.js`}
                         config={CANDLE_CHART_WIDGET_CONFIG(symbol)}
-                        className="custom-chart"
+                        className="custom-chart custom-widget"
                         height={600}
                     />
 
@@ -64,7 +63,7 @@ export default function StockDetails() {
                         symbol={symbol}
                         scriptUrl={`${scriptUrl}advanced-chart.js`}
                         config={BASELINE_WIDGET_CONFIG(symbol)}
-                        className="custom-chart"
+                        className="custom-chart custom-widget"
                         height={600}
                     />
                 </div>
@@ -78,6 +77,7 @@ export default function StockDetails() {
                         symbol={symbol}
                         scriptUrl={`${scriptUrl}technical-analysis.js`}
                         config={TECHNICAL_ANALYSIS_WIDGET_CONFIG(symbol)}
+                        className='custom-widget'
                         height={400}
                     />
 
@@ -86,6 +86,7 @@ export default function StockDetails() {
                         symbol={symbol}
                         scriptUrl={`${scriptUrl}symbol-profile.js`}
                         config={COMPANY_PROFILE_WIDGET_CONFIG(symbol)}
+                        className='custom-widget'
                         height={440}
                     />
 
@@ -93,6 +94,7 @@ export default function StockDetails() {
                         key={`company-financials-${symbol}`}
                         symbol={symbol}
                         scriptUrl={`${scriptUrl}financials.js`}
+                        className='custom-widget'
                         config={COMPANY_FINANCIALS_WIDGET_CONFIG(symbol)}
                         height={464}
                     />
