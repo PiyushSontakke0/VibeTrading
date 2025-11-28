@@ -11,7 +11,6 @@ export function ThemeToggle() {
   const toggleTheme = (event: React.MouseEvent<HTMLButtonElement>) => {
     const newTheme = theme === "dark" ? "light" : "dark";
 
-    // 1. Check if the browser supports View Transitions
     if (
       !document.startViewTransition ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -20,7 +19,6 @@ export function ThemeToggle() {
       return;
     }
 
-    // 2. Get the click coordinates
     const x = event.clientX;
     const y = event.clientY;
 
@@ -47,7 +45,6 @@ export function ThemeToggle() {
         {
           duration: 500,
           easing: "ease-in-out",
-          // This tells the browser to animate the "new" view (the incoming theme)
           pseudoElement: "::view-transition-new(root)",
         }
       );

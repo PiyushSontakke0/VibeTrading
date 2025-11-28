@@ -47,7 +47,7 @@ const data = {
     },
     {
       title: "Stocks",
-      url: "../app/stocks/[symbol]",
+      url: "/stocks",
       icon: IconListDetails,
     },
     {

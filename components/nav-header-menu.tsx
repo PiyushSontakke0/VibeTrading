@@ -54,7 +54,11 @@ const components: { title: string; href: string; description: string }[] = [
     },
 ]
 
-export function NavigationMenuDemo() {
+export function NavigationMenuDemo({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     const isMobile = useIsMobile()
 
     return (
@@ -190,7 +194,7 @@ export function NavigationMenuDemo() {
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
-                <ThemeToggle />
+                {children}
             </NavigationMenuList>
         </NavigationMenu>
     )
