@@ -12,10 +12,12 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
+import Image from "next/image"
 import { Loader2, } from "lucide-react"
 import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
 import { useRouter } from "next/navigation"
 import { LoaderD } from "./ui/loader"
+import { authClient } from "@/lib/better-auth/client"
 export function SignUpForm({
     className,
     ...props
@@ -32,7 +34,6 @@ export function SignUpForm({
         const formData = new FormData(event.currentTarget)
         const name = formData.get("name") as string
         const email = formData.get("email") as string
-        const country = formData.get("country") as string
         const password = formData.get("password") as string
         const confirmPassword = formData.get("confirmPassword") as string
 
@@ -43,24 +44,27 @@ export function SignUpForm({
         }
 
         try {
-            const res = await fetch("/api/auth/signup", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, country, password }),
+            const { error: authError, data } = await authClient.signUp.email({
+                name,
+                email,
+                password,
+                callbackURL: "/dashboard",
             })
 
-            const data = await res.json()
-
-            if (!res.ok) {
-                setError(data.error || "Sign up failed")
+            if (authError) {
+                setError(authError.message || "Sign up failed")
                 return
             }
 
-            // Redirect to dashboard
+            if (data?.user) {
+                router.push("/dashboard")
+                return
+            }
+
             router.push("/dashboard")
         } catch (err) {
             console.error(err)
-            setError("Something went wrong")
+            setError(err instanceof Error ? err.message : "Something went wrong")
         } finally {
             setLoading(false)
         }
@@ -81,16 +85,10 @@ export function SignUpForm({
 
                             {/* --- CHANGED: Added a grid wrapper for inputs --- */}
                             <div className="grid gap-4">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <Field>
-                                        <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                                        <Input id="name" name="name" type="text" placeholder="John Doe" required />
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel htmlFor="country">Country</FieldLabel>
-                                        <Input id="country" name="country" type="text" placeholder="Country" required />
-                                    </Field>
-                                </div>
+                                <Field>
+                                    <FieldLabel htmlFor="name">Full Name</FieldLabel>
+                                    <Input id="name" name="name" type="text" placeholder="John Doe" required />
+                                </Field>
 
                                 <Field>
                                     <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -144,11 +142,12 @@ export function SignUpForm({
                         </FieldGroup>
                     </form>
 
-                    <div className="bg-muted relative hidden md:block">
-                        <img
-                            src="/bull.jpg"
-                            alt="Image"
-                            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8] dark:grayscale"
+                    <div className="bg-muted relative min-h-[320px] block">
+                        <Image
+                            src="/bull.jpg" // make sure this is in /public
+                            alt="Trading illustration"
+                            fill
+                            className="object-cover dark:brightness-[0.8] dark:grayscale"
                         />
                     </div>
                 </CardContent>

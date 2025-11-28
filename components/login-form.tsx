@@ -1,4 +1,10 @@
-import { cn } from "@/lib/utils"
+'use client'
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -9,13 +15,14 @@ import {
     FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
-import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
+import { authClient } from "@/lib/better-auth/client"
+import { cn } from "@/lib/utils"
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
+    const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -29,31 +36,32 @@ export function LoginForm({
         const password = formData.get("password") as string
 
         try {
-            const res = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
+            const { data, error: authError } = await authClient.signIn.email({
+                email,
+                password,
+                callbackURL: "/dashboard",
             })
 
-            const data = await res.json()
-
-            if (!res.ok) {
-                setError(data.error || "Login failed")
+            if (authError) {
+                setError(authError.message || "Login failed")
                 return
             }
 
-            alert("Login successful!")
-            console.log("Logged in user:", data.user)
+            if (data?.url) {
+                router.push(data.url)
+                return
+            }
+
+            router.push("/dashboard")
         } catch (err) {
             console.error(err)
-            setError("Something went wrong")
+            setError(err instanceof Error ? err.message : "Something went wrong")
         } finally {
             setLoading(false)
         }
     }
 
-    return (<>
-
+    return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card className="overflow-hidden p-0">
                 <CardContent className="grid p-0 md:grid-cols-2">
@@ -111,14 +119,13 @@ export function LoginForm({
 
                             <Field className="grid grid-cols-3 gap-4">
                                 <Button variant="outline" type="button">
-                                    <span className=""><FaApple /></span>
-
+                                    <span><FaApple /></span>
                                 </Button>
                                 <Button variant="outline" type="button">
-                                    <span className=""><FaGoogle /></span>
+                                    <span><FaGoogle /></span>
                                 </Button>
                                 <Button variant="outline" type="button">
-                                    <span className=""><FaMeta /></span>
+                                    <span><FaMeta /></span>
                                 </Button>
                             </Field>
 
@@ -128,11 +135,14 @@ export function LoginForm({
                         </FieldGroup>
                     </form>
 
-                    <div className="bg-muted relative hidden md:block">
-                        <img
+                    <div className="bg-muted relative hidden min-h-[320px] md:block">
+                        <Image
                             src="/bull.jpg"
-                            alt="Image"
-                            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8] dark:grayscale"
+                            alt="Trading illustration"
+                            fill
+                            priority
+                            className="object-cover dark:brightness-[0.8] dark:grayscale"
+                            sizes="(min-width: 768px) 50vw, 100vw"
                         />
                     </div>
                 </CardContent>
@@ -142,6 +152,6 @@ export function LoginForm({
                 By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
                 and <a href="#">Privacy Policy</a>.
             </FieldDescription>
-        </div></>
+        </div>
     )
 }

@@ -19,7 +19,6 @@ import {
   IconUsers,
 } from "@tabler/icons-react"
 
-import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
@@ -32,6 +31,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { authClient } from "@/lib/better-auth/client"
 
 const data = {
   user: {
@@ -136,6 +136,14 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: session } = authClient.useSession()
+  const authenticatedUser = session?.user
+  const resolvedUser = {
+    name: authenticatedUser?.name || data.user.name,
+    email: authenticatedUser?.email || data.user.email,
+    avatar: authenticatedUser?.image || data.user.avatar,
+  }
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -158,7 +166,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={resolvedUser} isAuthenticated={Boolean(authenticatedUser)} />
       </SidebarFooter>
     </Sidebar>
   )

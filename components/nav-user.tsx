@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import {
   IconCreditCard,
   IconDotsVertical,
@@ -28,17 +30,42 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { authClient } from "@/lib/better-auth/client"
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
+type NavUserProps = {
+  user?: {
+    name?: string | null
+    email?: string | null
+    avatar?: string | null
   }
-}) {
+  isAuthenticated?: boolean
+}
+
+export function NavUser({ user, isAuthenticated }: NavUserProps) {
+  const router = useRouter()
   const { isMobile } = useSidebar()
+  const [signingOut, setSigningOut] = useState(false)
+
+  const displayName = user?.name || "Vibe Trader"
+  const displayEmail = user?.email || "Sign in to personalize"
+  const displayAvatar = user?.avatar || "/avatars/shadcn.jpg"
+
+  const handleLogout = async () => {
+    if (!isAuthenticated || signingOut) return
+    setSigningOut(true)
+    try {
+      const { error } = await authClient.signOut()
+      if (error) {
+        console.error(error)
+        return
+      }
+      router.push("/sign-in")
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setSigningOut(false)
+    }
+  }
 
   return (
     <SidebarMenu>
@@ -50,13 +77,13 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarImage src={displayAvatar} alt={displayName} />
+                <AvatarFallback className="rounded-lg">VT</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-medium">{displayName}</span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {user.email}
+                  {displayEmail}
                 </span>
               </div>
               <IconDotsVertical className="ml-auto size-4" />
@@ -71,13 +98,13 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarImage src={displayAvatar} alt={displayName} />
+                  <AvatarFallback className="rounded-lg">VT</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate font-medium">{displayName}</span>
                   <span className="text-muted-foreground truncate text-xs">
-                    {user.email}
+                    {displayEmail}
                   </span>
                 </div>
               </div>
@@ -98,9 +125,15 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <IconLogout />
-              Log out
+            <DropdownMenuItem
+              onSelect={(event) => {
+                event.preventDefault()
+                handleLogout()
+              }}
+              disabled={!isAuthenticated || signingOut}
+            >
+              <IconLogout className={signingOut ? "animate-pulse" : ""} />
+              {signingOut ? "Signing out..." : "Log out"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
