@@ -18,7 +18,7 @@ const Header = ({
                         alt="Logo"
                         width={140}
                         height={32}
-                        className="h-8 w-auto cursor-pointer"
+                        className="h-8 w-auto cursor-pointer "
                     />
                 </Link>
 

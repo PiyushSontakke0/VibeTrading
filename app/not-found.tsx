@@ -50,9 +50,9 @@ export default function NotFound() {
 
                         {/* Stable Line (The "Before" part) */}
                         <motion.path
-                            d="M 0 100 Q 50 80, 100 100 T 200 90" // A nice smooth curve
+                            d="M 0 100 Q 50 80, 100 100 T 200 90"
                             fill="none"
-                            stroke="#22c55e" // Green
+                            stroke="#22c55e"
                             strokeWidth="2"
                             initial={{ pathLength: 0, opacity: 0 }}
                             animate={{ pathLength: 1, opacity: 1 }}
