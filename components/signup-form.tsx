@@ -12,15 +12,9 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-<<<<<<< HEAD
 import { Loader2, } from "lucide-react"
 import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
-=======
 import { useRouter } from "next/navigation"
-import { Loader2 } from "lucide-react"
-
-
->>>>>>> a8eb4438ff320d461af2c523e913e7a0da93df55
 export function SignUpForm({
     className,
     ...props
