@@ -57,12 +57,12 @@ const data = {
     },
     {
       title: "Predict",
-      url: "#",
+      url: "/predict",
       icon: IconFolder,
     },
     {
       title: "Our Team",
-      url: "#",
+      url: "/ourteam",
       icon: IconUsers,
     },
   ],
