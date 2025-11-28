@@ -8,20 +8,7 @@ export default function LoginPage() {
             <div className="w-full max-w-sm md:max-w-4xl">
                 <LoginForm />
             </div>
-
-            {/* Step 2: Add a button to trigger the toggle */}
-            {/* <button
-                onClick={toggleDarkMode}
-                className="mt-6 bg-primary text-primary-foreground px-4 py-2 rounded-md"
-            >
-                Toggle Dark Mode
-            </button> */}
-            <div className="mt-10">
-                <ThemeToggle />
-            </div>
-
-
-
+            <ThemeToggle />
         </div>
     );
 }
