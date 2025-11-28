@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export function SignUpForm({
     className,
@@ -19,6 +20,7 @@ export function SignUpForm({
 }: React.ComponentProps<"div">) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const router = useRouter()
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -52,8 +54,8 @@ export function SignUpForm({
                 return
             }
 
-            alert("Sign up successful!")
-            console.log("New user:", data.user)
+            // Redirect to dashboard
+            router.push("/dashboard")
         } catch (err) {
             console.error(err)
             setError("Something went wrong")
@@ -114,7 +116,6 @@ export function SignUpForm({
                                 Or continue with
                             </FieldSeparator>
 
-                            {/* Social buttons */}
                             <Field className="grid grid-cols-3 gap-4">
                                 <Button variant="outline" type="button">
                                     <span className="sr-only">Sign up with Apple</span>
@@ -137,7 +138,7 @@ export function SignUpForm({
                         <img
                             src="/bull.jpg"
                             alt="Image"
-                            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8] dark:grayscale"
+                            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
                         />
                     </div>
                 </CardContent>
