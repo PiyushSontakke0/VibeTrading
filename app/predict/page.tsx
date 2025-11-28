@@ -7,7 +7,6 @@ import React from 'react'
 const predict = () => {
     return (
         <div>
-            <Header />
 
 
         </div>

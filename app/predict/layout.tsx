@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google"; // 
 import localFont from "next/font/local";
@@ -29,6 +30,7 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
             <body className="font-sans antialiased">
+                <Header />
                 {children}
             </body>
         </html>
