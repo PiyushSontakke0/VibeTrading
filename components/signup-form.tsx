@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-
-
+import { Loader2, } from "lucide-react"
+import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
 export function SignUpForm({
     className,
     ...props
@@ -130,9 +130,9 @@ export function SignUpForm({
 
                             {/* Social buttons (Content omitted for brevity, kept structure) */}
                             <Field className="grid grid-cols-3 gap-4">
-                                <Button variant="outline" type="button">Apple</Button>
-                                <Button variant="outline" type="button">Google</Button>
-                                <Button variant="outline" type="button">Meta</Button>
+                                <Button variant="outline" type="button"><FaApple /></Button>
+                                <Button variant="outline" type="button"><FaGoogle /></Button>
+                                <Button variant="outline" type="button"><FaMeta /></Button>
                             </Field>
 
                             <FieldDescription className="text-center mt-4">

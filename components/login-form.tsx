@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
+import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
 
 export function LoginForm({
     className,
@@ -110,14 +111,14 @@ export function LoginForm({
                             {/* Social buttons */}
                             <Field className="grid grid-cols-3 gap-4">
                                 <Button variant="outline" type="button">
-                                    <span className="sr-only">Login with Apple</span>
-                                    {/* SVG icon here */}
+                                    <span className="sr-only"><FaApple /></span>
+
                                 </Button>
                                 <Button variant="outline" type="button">
-                                    <span className="sr-only">Login with Google</span>
+                                    <span className="sr-only"><FaGoogle /></span>
                                 </Button>
                                 <Button variant="outline" type="button">
-                                    <span className="sr-only">Login with Meta</span>
+                                    <span className="sr-only"><FaMeta /></span>
                                 </Button>
                             </Field>
 
