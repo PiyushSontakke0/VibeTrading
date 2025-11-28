@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/sidebar"
 
 import data from "./data.json"
-import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function Page() {
   return (
