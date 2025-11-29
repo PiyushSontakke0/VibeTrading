@@ -8,11 +8,11 @@ const Header = ({
     children: React.ReactNode;
 }) => {
     return (
-        <header className="sticky top-0 shadow-sm">
-            <div className="container mx-auto flex items-center justify-between py-4">
+        <header className="sticky top-0 shadow-sm z-50 bg-card/90 border-b border-border backdrop-blur-sm">
+            <div className="container mx-auto flex items-center justify-between py-3 px-4">
 
                 {/* Left: Logo */}
-                <Link href="/">
+                <Link href="/dashboard">
                     <Image
                         src="/vercel.svg"
                         alt="Logo"
