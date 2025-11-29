@@ -4,7 +4,6 @@ export const NAV_ITEMS = [
     { href: '/watchlist', label: 'Watchlist' },
 ];
 
-// Sign-up form select options
 export const INVESTMENT_GOALS = [
     { value: 'Growth', label: 'Growth' },
     { value: 'Income', label: 'Income' },
@@ -103,7 +102,7 @@ export const HEATMAP_WIDGET_CONFIG = {
     isTransparent: true,
     locale: 'en',
     symbolUrl: '',
-    colorTheme: 'dark',
+    //colorTheme: 'dark',
     exchanges: [],
     hasTopBar: false,
     isDataSetEnabled: false,
@@ -117,7 +116,7 @@ export const HEATMAP_WIDGET_CONFIG = {
 export const TOP_STORIES_WIDGET_CONFIG = {
     displayMode: 'regular',
     feedMode: 'market',
-    colorTheme: 'dark',
+    //colorTheme: 'dark',
     isTransparent: true,
     locale: 'en',
     market: 'stock',
@@ -131,7 +130,7 @@ export const MARKET_DATA_WIDGET_CONFIG = {
     height: 600,
     locale: 'en',
     showSymbolLogo: true,
-    colorTheme: 'dark',
+    //colorTheme: 'dark',
     isTransparent: false,
     backgroundColor: '#0F0F0F',
     symbolsGroups: [
@@ -172,7 +171,7 @@ export const MARKET_DATA_WIDGET_CONFIG = {
 
 export const SYMBOL_INFO_WIDGET_CONFIG = (symbol: string) => ({
     symbol: symbol.toUpperCase(),
-    colorTheme: 'dark',
+    //colorTheme: 'dark',
     isTransparent: false,
     backgroundColor: '#09090b',
     locale: 'en',
@@ -194,7 +193,7 @@ export const CANDLE_CHART_WIDGET_CONFIG = (symbol: string) => ({
     save_image: false,
     style: 1,
     symbol: symbol.toUpperCase(),
-    theme: 'dark',
+    //theme: 'dark',
     timezone: 'Etc/UTC',
     backgroundColor: '#09090b',
     gridColor: '#09090b',
@@ -220,7 +219,7 @@ export const BASELINE_WIDGET_CONFIG = (symbol: string) => ({
     save_image: false,
     style: 10,
     symbol: symbol.toUpperCase(),
-    theme: 'dark',
+    //theme: 'dark',
     timezone: 'Etc/UTC',
     backgroundColor: '#09090b',
     gridColor: '#09090b',
@@ -234,7 +233,7 @@ export const BASELINE_WIDGET_CONFIG = (symbol: string) => ({
 
 export const TECHNICAL_ANALYSIS_WIDGET_CONFIG = (symbol: string) => ({
     symbol: symbol.toUpperCase(),
-    colorTheme: 'dark',
+    //colorTheme: 'dark',
     isTransparent: false,
     backgroundColor: '#09090b',
     locale: 'en',
@@ -246,7 +245,7 @@ export const TECHNICAL_ANALYSIS_WIDGET_CONFIG = (symbol: string) => ({
 
 export const COMPANY_PROFILE_WIDGET_CONFIG = (symbol: string) => ({
     symbol: symbol.toUpperCase(),
-    colorTheme: 'dark',
+    //colorTheme: 'dark',
     isTransparent: false,
     backgroundColor: '#09090b',
     locale: 'en',
@@ -256,7 +255,7 @@ export const COMPANY_PROFILE_WIDGET_CONFIG = (symbol: string) => ({
 
 export const COMPANY_FINANCIALS_WIDGET_CONFIG = (symbol: string) => ({
     symbol: symbol.toUpperCase(),
-    colorTheme: 'dark',
+    //colorTheme: 'dark',
     isTransparent: false,
     backgroundColor: '#09090b',
     locale: 'en',

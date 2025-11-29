@@ -1,11 +1,13 @@
-import React from 'react'
+"use client";
 
-const ourteam = () => {
+import OurTeamPage from "@/components/team/OurTeamPage";
+
+
+export default function OurTeam() {
+
     return (
         <div>
-
+            <OurTeamPage />
         </div>
-    )
+    );
 }
-
-export default ourteam

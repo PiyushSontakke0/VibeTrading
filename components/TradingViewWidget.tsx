@@ -2,12 +2,13 @@
 
 import useTradingViewWidget from '@/hooks/useTradingViewWidget';
 import React, { memo } from 'react';
+import { useTheme } from 'next-themes';
 
 interface TradingViewWidgetProps {
-    symbol: string;                     // <--- REQUIRED
+    symbol: string;
     title?: string;
     scriptUrl?: string;
-    config?: Record<string, unknown>;   // Optional override
+    config?: Record<string, unknown>;
     height?: number;
     className?: string;
 }
@@ -20,23 +21,26 @@ const TradingViewWidget = ({
     height = 600,
     className = '',
 }: TradingViewWidgetProps) => {
+    const { resolvedTheme } = useTheme();
 
     // Default widget config
     const defaultConfig = {
         symbol: symbol.toUpperCase(),
         interval: "D",
         timezone: "Etc/UTC",
-        theme: "dark",
+        theme: resolvedTheme === 'dark' ? 'dark' : 'light',
+        colorTheme: resolvedTheme === 'dark' ? 'dark' : 'light',
         style: "1",
         allow_symbol_change: false,
         hide_side_toolbar: false,
         locale: "en",
+        backgroundColor: "rgba(0, 0, 0, 0)",
     };
 
     // Merge user config on top
     const finalConfig = { ...defaultConfig, ...config };
 
-    const watchKey = `${symbol}-${scriptUrl ?? "default"}`;
+    const watchKey = `${symbol}-${scriptUrl ?? "default"}-${resolvedTheme}`;
 
     const containerRef = useTradingViewWidget(
         scriptUrl ?? '',
@@ -46,24 +50,25 @@ const TradingViewWidget = ({
     );
 
     return (
-        <div className="w-full">
+        <div className={`flex flex-col gap-3 w-full ${className}`}>
             {title && (
-                <h3 className="font-semibold text-2xl text-gray-100 mb-5">
+                <h3 className="text-lg font-medium tracking-tight text-foreground px-1">
                     {title}
                 </h3>
             )}
 
-            {/* Rounded wrapper to give widgets smooth, clipped corners */}
-            <div className="rounded-lg overflow-hidden border border-border bg-card">
+            <div
+                className="relative w-full rounded-xl border border-border bg-card shadow-sm overflow-hidden"
+                style={{ height: `${height}px` }}
+            >
                 <div
-                    className={`tradingview-widget-container ${className}`}
                     ref={containerRef}
-                    style={{ height: `${height}px`, width: '100%', borderRadius: 'inherit', overflow: 'hidden' }}
+                    className="tradingview-widget-container h-full w-full"
                 >
                     <div
-                        className="tradingview-widget-container__widget"
-                        style={{ height, width: '100%', borderRadius: 'inherit', overflow: 'hidden' }}
+                        className="tradingview-widget-container__widget h-full w-full"
                     />
+
                 </div>
             </div>
         </div>
