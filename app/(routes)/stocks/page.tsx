@@ -110,7 +110,7 @@ function Sparkline({ data, width = 120, height = 24 }: { data: number[]; width?:
 // LocalStorage cache utilities
 const CACHE_KEY = 'vibe_stock_prices_cache';
 const CACHE_EXPIRY_KEY = 'vibe_stock_prices_expiry';
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours = 1 day
 
 function getCachedPrices(): Record<string, { price: number; change: number; percent: number; series: number[] }> | null {
     if (typeof window === 'undefined') return null;
